@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .www {
+        border: 3px solid black;
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ww,
+    .ee,
+    .rr {
+        border: 3px solid green;
+        min-width: 50px;
+        height: 30px;
+        margin: 10px;
+    }
+
+    .w,
+    .e {
+        border: 2px solid blue;
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .t {
+        border: 2px solid blue;
+        min-width: 250px;
+        min-height: 50px;
+        margin: 10px;
+        border-radius: 10px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 20px;
+        line-height: 1.5;
+    }
+</style>
+<body>
+<div class="q">
+	<div class="www">play</div>
+	<input class="ww">write number search</input>
+	<input class="ee">write first number</input>
+	<input class="rr">write last number</input>
+	<div class="w">Index</div>
+	<div class="e">number of repetitions</div>
+	<div class="t">number in interval</div>
+</div>
+</body>
+</html>
+
+<script>
+
+    let www = document.querySelector('.www'),
+        ww = document.querySelector('.ww'),
+        ee = document.querySelector('.ee'),
+        rr = document.querySelector('.rr');
+
+
+
+    let w = document.querySelector('.w'),
+        e = document.querySelector('.e'),
+        t = document.querySelector('.t');
+
+    createArr =(firstNumber, lastNumber, writeNumber)=> {
+
+        let myList = [],
+            start = firstNumber;
+
+
+        while (start <= lastNumber) {
+            myList.push(start++);
+        }
+
+        search(writeNumber, myList.length, firstNumber, myList, myList[myList.length-1])
+    }
+
+    function search(searchNumber, maxIndex, firstNumber, myList, maxNumber) {
+        t.textContent = '';
+
+
+        if	(maxNumber >= searchNumber && searchNumber >= firstNumber) {
+            let minNumber = 0,
+                i = 0,
+                guess,
+                mid;
+
+
+            while (minNumber <= maxIndex) {
+                mid = (Math.round((maxIndex - minNumber) / 2)  + minNumber);
+                i++;
+                guess = myList[mid];
+                console.log(firstNumber);
+
+                t.textContent += `${guess} `;
+                if (guess === searchNumber) {
+                    e.textContent = i;
+                    w.textContent = mid;
+                    return
+                } else if (guess > searchNumber) {
+                    maxIndex = mid-1;
+                } else if (guess < searchNumber) {
+                    minNumber = mid;
+                } else {
+                    return -1
+                }
+
+            }
+        } else {
+            e.textContent = 'error';
+            w.textContent = 'error';
+            t.textContent = 'error';
+        }
+    }
+
+    www.addEventListener('click', function() {
+        let writeNumber = Number(ww.value),
+            firstNumber = Number(ee.value),
+            lastNumber = Number(rr.value);
+
+
+        createArr(firstNumber, lastNumber, writeNumber);
+
+    })
+
+</script>
